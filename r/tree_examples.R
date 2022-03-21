@@ -66,6 +66,8 @@ load.tree = rpart(COAST~temp, data=load_tree,
 # This is pretty typical of CART models:
 # the cross-validated error bottoms out and goes back SLOWLY
 plotcp(load.tree)
+plotcp(load.tree, ylim=c(.28, .30))
+## dotted line is the 1se rule (the simplest tree that is statistically indistinguishable from the best tree)
 
 # If you want the actual numbers:
 printcp(load.tree)
@@ -163,14 +165,14 @@ ggplot(X_test) +
 pen = read.table('../data/pen2ref.txt',header=TRUE)
 
 head(pen)
-mean(pen$oppcall)
+mean(pen$oppcall) #there seems to be some bias towards to the home team
 
 #--------------------------------------------------
 # simple tree on hockey data
 # first get big tree
 temp = rpart(oppcall ~ timespan + goaldiff + numpen + inrow2 + inrow3, data=pen,
              control = rpart.control(cp = 0.0001, minsplit=5))
-length(unique(temp$where))
+length(unique(temp$where)) #number of splits
 
 #then prune it down 
 pen.tree = prune_1se(temp)
