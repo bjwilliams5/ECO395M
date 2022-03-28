@@ -110,6 +110,9 @@ varImpPlot(forest1)
 # compare with boosted regression trees
 ###
 
+# gbm = gradient boosted model, interaction.depth splits trees down to maximum four levels, n.trees is B (number of trees), shrinkage is lambda 
+# (how much to squish the dataset)
+
 boost1 = gbm(boarding ~ day + temperature + min_of_day + precipYes + inSemester, 
                data = capmetro362_train,
                interaction.depth=4, n.trees=500, shrinkage=.05)
