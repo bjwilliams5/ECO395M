@@ -7,6 +7,8 @@ protein_scaled = scale(protein, center=TRUE, scale=TRUE)
 # Form a pairwise distance matrix using the dist function
 protein_distance_matrix = dist(protein_scaled, method='euclidean')
 
+# you can look at the distance matrix
+protein_distance_matrix
 
 # Now run hierarchical clustering
 hier_protein = hclust(protein_distance_matrix, method='average')
@@ -14,6 +16,12 @@ hier_protein = hclust(protein_distance_matrix, method='average')
 
 # Plot the dendrogram
 plot(hier_protein, cex=0.8)
+
+## what happens if we change the method?
+
+hier_protein_min = hclust(protein_distance_matrix, method='single')
+plot(hier_protein_min, cex=0.8)
+
 
 # Cut the tree into 5 clusters
 cluster1 = cutree(hier_protein, k=5)
@@ -26,7 +34,7 @@ which(cluster1 == 3)
 
 
 # Using max ("complete") linkage instead
-hier_protein2 = hclust(protein_distance_matrix, method='single')
+hier_protein2 = hclust(protein_distance_matrix, method='complete')
 
 # Plot the dendrogram
 plot(hier_protein2, cex=0.8)
@@ -61,6 +69,25 @@ h1 = hclust(distance_between_cars, method='single')
 # Cut the tree into 10 clusters
 cluster1 = cutree(h1, k=10)
 summary(factor(cluster1))
+
+## What about average?
+
+# Now run hierarchical clustering
+h1 = hclust(distance_between_cars, method='average')
+
+# Cut the tree into 10 clusters
+cluster1 = cutree(h1, k=10)
+summary(factor(cluster1))
+
+## Still not super balanced, what about max?
+
+# Now run hierarchical clustering
+h1 = hclust(distance_between_cars, method='complete')
+
+# Cut the tree into 10 clusters
+cluster1 = cutree(h1, k=10)
+summary(factor(cluster1))
+
 
 # Examine the cluster members
 which(cluster1 == 1)
